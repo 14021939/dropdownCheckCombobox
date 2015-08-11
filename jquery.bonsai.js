@@ -30,13 +30,18 @@
   var Bonsai = function(el, options) {
     var self = this;
     var options = options || {};
-    this.options = $.extend({}, $.bonsai.defaults, options);
+    this.options = $.extend({onSuccess: function(bonsai) {}},
+     $.bonsai.defaults, options);
     this.el = $(el).addClass('bonsai').data('bonsai', this);
 
     // store the scope in the options for child nodes
     if (!this.options.scope) {
       this.options.scope = this.el;
     }
+
+    $(this).bind('success', self.options.onSuccess)
+
+
     this.update();
     if (this.isRootNode()) {
       if (!this.el.find("ol").length) $(this.el.children()).css("padding-left","0");
@@ -50,6 +55,8 @@
       });
     }
     if (this.options.expandAll) this.expandAll();
+    $(this).trigger('success', [this]);
+
   };
   Bonsai.prototype = {
     isRootNode: function() {

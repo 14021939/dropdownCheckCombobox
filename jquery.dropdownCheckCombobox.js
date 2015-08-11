@@ -13,12 +13,10 @@
       }
     });
   };
-
   $.dropdownCheckCombobox = {};
   $.dropdownCheckCombobox.defaults = {
       inputBox: {id : "dropdownCheckCombobox"}
   };
-
   var DropdownCheckCombobox = function(el, options) {
     var self = this;
     var options = options || {};
@@ -62,24 +60,29 @@
           if(!isGroup){listItem.attr('data-value', data.id);}
         },
         onSuccess: function(event, jsonList)  {
-            return $(this.el).find('> ol').bonsai({
+            $(this.el).find('> ol').bonsai({
               checkboxes: true,
               createInputs: 'checkbox',
               handleDuplicateCheckboxes: true,
-              expandAll: true
-            });
+              expandAll: true,
+              onSuccess: function(event)  {
+                self.handleCombobox();
+              }
+            }
+            );
           }
       });
-      this.handleCombobox();
     },
     handleCombobox: function() {
       var self = this;
-      var comboBox = $(dropdownCheckCombobox).children('input.combo-text');
+      var comboBox = self.inputel.children('input.combo-text');
+
       this.setCombobox(comboBox);
-      this.el.find('input[type="checkbox"]').each(function(i,e){
+
+      this.bonsai.find('input[type="checkbox"]').each(function(i,e){
         self.appendOptionTag(e, comboBox);
       });
-      this.el.on('change', 'input[type=checkbox]', function(e) {
+      this.bonsai.on('change', 'input[type=checkbox]', function(e) {
         self.setCombobox(comboBox); // Set Combobox Text.
         // Create input hidden Tag.
         if ($(e.target).is(':checked')) {
@@ -87,12 +90,10 @@
         } else {
           self.changeOptionTag(e.target, false);
         }
-
       });
     },
     setCombobox: function(comboBox) {
       var checkedText=[];
-      console.log(this.bonsai.children());
       this.bonsai.find('input[type="checkbox"]:checked').each(function(i,el){
         var genderValue = $(el).attr("id");
         var genderText = $('label[for="' + genderValue + '"]').text();
@@ -106,12 +107,12 @@
         var tag = $('<option value=""></option>')
         tag.val(targetVal);
         if ($(target).is(':checked')) tag.attr('selected', true);
-        self.selectTag.append(tag);
+        this.el.append(tag);
       };
     },
     changeOptionTag: function(target, flag) {
       var targetVal = $(target).val();
-      self.selectTag.find('option').each(function(i,el){
+      this.el.find('option').each(function(i,el){
         if ($(el).val() == targetVal) $(el).attr('selected', flag);
       });
     },
