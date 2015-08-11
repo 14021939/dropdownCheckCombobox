@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>jstree basic demos</title>
+  <link href="./jquery.bonsai.css" type="text/css" rel="stylesheet">
+  <link href="./main.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <div id="header">
+      <div id="title"><h1>オーケー牧場</h1></div>
+    </div>
+    <div id="main">
+      <div class="subtitle">
+        <div class="circle">
+          <span>test</span>
+        </div>
+      </div>
+
+      <h2>ツリーリスト</h2>
+      <div class="demo">
+        <form method="post" action="file:///Users/h_wakabayashi/Downloads/haz-20150805/index.html">
+          <select id="html1" style="width:200px;" multiple="true" >
+          </select>
+        </form>
+      </div>
+      <h2>ただのりすと</h2>
+      <div class="demo">
+        <form method="post" action="file:///Users/h_wakabayashi/Downloads/haz-20150805/index.html">
+          <select id="html2" style="width:200px;" multiple="true" >
+          </select>
+        </form>
+      </div>
+  </div>
+
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <!-- <script src="haz/biz.jquery.js"></script> -->
+  <script type="text/javascript" src="./jquery.bonsai.js"></script>
+  <script type="text/javascript" src="./jquery.qubit.js"></script>
+  <script type="text/javascript" src="./jquery.json-list.js"></script>
+  <script type="text/javascript" src="./jquery.dropdownCheckCombobox.js"></script>
+  <script type="text/javascript">
+  $("#html1").dropdownCheckCombobox({dataUrl: "tree_data.json", inputBox: {id : "dropdownCheckCombobox"}});
+  $("#html2").dropdownCheckCombobox({dataUrl: "tree_data2.json", inputBox: {id : "dropdownCheckCombobox2"}});
+  </script>
+</body>
+</html>
